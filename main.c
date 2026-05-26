@@ -72,8 +72,10 @@ int main() {
   int TL = 0;
 
   // Controle
-  int opcMenu, opcSub;
-  int i, j, pos;
+  int opcMenu, opcSub; // Opções menus
+  int i, j, pos; // Índices de uso geral
+
+  // Validação
   int encontrado, valido;
   int codInst, codMod;
   char cpf[15], nome[50], data[11], modalidade[50];
