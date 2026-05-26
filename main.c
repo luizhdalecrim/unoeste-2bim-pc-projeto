@@ -17,6 +17,7 @@
  * Autor: Luiz Henrique Dainez Alecrim
  */
 
+#include <ctype.h>
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
@@ -36,7 +37,29 @@
 #define TF_ALUNO 20
 #define TF_AVAL 20
 
+int valida_codigo(const char *codigo) {
+return 1;
+}
+int valida_nome() {
+return 1;
+}
+int valida_cpf() {
+return 1;
+}
+
+int valida_entrada(const char *valor, int campo) {
+  switch (campo) {
+    case 1:
+      return valida_nome(valor);
+    break;
+    default:
+      return 0;
+    break;
+  }
+}
+
 int main() {
+
   // Configurar terminal para UTF-8
   system("chcp 65001 > nul");
 
@@ -48,18 +71,18 @@ int main() {
 
   // Instrutores
   int vCodInst[TF_INST];
-  char vInstrutor[TF_INST][50];
+  char vInstrutor[TF_INST][255];
   int TLI = 0;
 
   // Modalidades
   int vCodMod[TF_MOD];
-  char vModalidade[TF_MOD][50];
+  char vModalidade[TF_MOD][255];
   float vValorAula[TF_MOD];
   int TLM = 0;
 
   // Alunos
-  char vCPFAluno[TF_ALUNO][15];
-  char vNomeAluno[TF_ALUNO][50];
+  char vCPFAluno[TF_ALUNO][11];
+  char vNomeAluno[TF_ALUNO][255];
   int vDiaVenc[TF_ALUNO];
   int vCodModAluno[TF_MOD];
   float vValor[TF_ALUNO];
@@ -72,14 +95,17 @@ int main() {
   int TL = 0;
 
   // Controle
-  int opcMenu, opcSub;
-  int i, j, pos;
+  int opcMenu, opcSub; // Opções menus
+  int i, j, pos;       // Índices de uso geral
+
+  // Validação
   int encontrado, valido;
+  char continuar;
+
   int codInst, codMod;
   char cpf[15], nome[50], data[11], modalidade[50];
   float valorAula, totalMensalidade;
   int diaVenc, diaHoje;
-  char continuar;
 
   // LOOP PRINCIPAL (MENU)
   opcMenu = 0;
@@ -93,7 +119,7 @@ int main() {
            "  [4] Relatórios\n"
            "  [5] Finalizar\n"
            "  Opção -> ");
-    scanf("%d", &opcMenu);
+    valido = scanf("%d", &opcMenu);
 
     // OPÇÃO 1 - SUBMENU CADASTRO
     if (opcMenu == 1) {
@@ -153,7 +179,10 @@ int main() {
 
                   // Lê string sem \n
                   scanf(" %[^\n]", nome);
-
+                  while (nome[i] != '\0') {
+                    nome[i] = toupper(nome[i]); // Converte para maiúsculo
+                    i++;
+                  }
                   setbuf(stdin, NULL);
                   vCodInst[TLI] = codInst;
                   strcpy(vInstrutor[TLI], nome);
@@ -177,8 +206,11 @@ int main() {
             printf(COR_VERMELHO "[ERRO]: Limite de alunos atingido. Exclua "
                                 "para liberar espaço.\n" COR_NORMAL);
           } else {
-            printf("CPF do aluno (formato 000.000.000-00) -> ");
-            valido = scanf(" %[^\n]", cpf);
+            // Validar cpf
+            do {
+              printf("CPF do aluno (apenas números) -> ");
+              valido = scanf(" %[^\n]", cpf);
+            } while (strlen(cpf) != 11);
             setbuf(stdin, NULL);
             encontrado = 0;
             for (i = 0; i < TLA; i++) {
