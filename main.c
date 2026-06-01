@@ -17,12 +17,15 @@
  * Autor: Luiz Henrique Dainez Alecrim
  */
 
-#include <locale.h>
 #include <stdio.h>
-#include <string.h>
 
 // BIBLIOTECA NECESSÁRIA PARA DEFINIR O TERMINAL PARA UTF-8
-#include <stdlib.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+#include <locale.h>
+#include <string.h>
 
 // CORES
 #define COR_VERMELHO "\033[1;31m"
@@ -37,11 +40,15 @@
 #define TF_AVAL 20
 
 int main() {
-  // Configurar terminal para UTF-8
-  system("chcp 65001 > nul");
 
   // Aceitar caracteres do padrão UTF-8 brasileiro
   setlocale(LC_ALL, "pt_BR.UTF-8");
+
+// Configurar terminal para UTF-8
+#ifdef _WIN32
+  SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP(CP_UTF8);
+#endif
 
   // Limpar terminal
   printf("\e[1;1H\e[2J");
@@ -73,7 +80,7 @@ int main() {
 
   // Controle
   int opcMenu, opcSub; // Opções menus
-  int i, j, pos; // Índices de uso geral
+  int i, j, pos;       // Índices de uso geral
 
   // Validação
   int encontrado, valido;
