@@ -16,8 +16,22 @@ O objetivo da realização do projeto é desenvolver e demonstrar a capacidade d
  * Suporte a cores para melhor feedback ao usuário;
  * Terminal e menus limpos.
 
+
 ---
-Autor: LUIZ HENRIQUE DAINEZ ALECRIM
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+```
+Copyright (c) 2026 Luiz H D Alecrim
+
+```
+
+---
+## Autor
+
+LUIZ HENRIQUE DAINEZ ALECRIM
 
 participa do grupo "07" com
 * ANGELO RAFAEL SANTOS SPIGAROLI
